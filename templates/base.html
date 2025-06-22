@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+{% load movie_filters %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Movies</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Swiper CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+  <!-- Favicon -->
+  <link rel="icon" href="{% static 'img/favicon.ico' %}">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+</head>
+
+<body>
+<div class="wrapper">
+
+  <!-- ✅ Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'img/logo.png' %}" alt="Logo" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="mainNavbar">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">Home</a>
+          </li>
+
+          <!-- Genres -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Genres</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'movie:movie_category' 'action' %}">Action</a></li>
+              <li><a class="dropdown-item" href="{% url 'movie:movie_category' 'comedy' %}">Comedy</a></li>
+              <li><a class="dropdown-item" href="{% url 'movie:movie_category' 'drama' %}">Drama</a></li>
+              <li><a class="dropdown-item" href="{% url 'movie:movie_category' 'romance' %}">Romance</a></li>
+            </ul>
+          </li>
+
+          <!-- Year -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Year</a>
+            <ul class="dropdown-menu">
+              {% for y in "2025,2024,2023,2022,2021"|split_by_comma %}
+                <li><a class="dropdown-item" href="{% url 'movie:movie_year' year=y %}">{{ y }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+
+          <!-- Language -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Language</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{% url 'movie:movie_language' 'english' %}">English</a></li>
+              <li><a class="dropdown-item" href="{% url 'movie:movie_language' 'german' %}">German</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'movie:about' %}">About</a>
+          </li>
+        </ul>
+
+        <!-- Search -->
+        <form class="d-flex" method="GET" action="{% url 'movie:movie_search' %}">
+          <input class="form-control me-2" type="search" name="query" value="{{ request.GET.query }}" placeholder="Search...">
+          <button class="btn btn-outline-light" type="submit">Search</button>
+        </form>
+<!-- 🔐 Auth Buttons -->
+    <div class="d-flex align-items-center ms-3">
+       {% if request.user.is_authenticated %}
+        <a href="{% url 'movie:dashboard' %}" class="btn btn-outline-info btn-sm me-2">🎬 Dashboard</a>
+        <a href="{% url 'movie:logout' %}" class="btn btn-outline-danger btn-sm">🚪 Logout</a>
+      {% else %}
+        <a href="{% url 'movie:login' %}" class="btn btn-outline-light btn-sm me-2">🔐 Login</a>
+        <a href="{% url 'movie:signup' %}" class="btn btn-warning btn-sm">📝 Signup</a>
+      {% endif %}
+
+    </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- ✅ Swiper Header Slider -->
+  {% if slider_movies %}
+  <div class="homeslider swiper">
+    <div class="swiper-wrapper">
+      {% for movie in slider_movies %}
+        <div class="swiper-slide">
+          <img src="{{ movie.banner.url|default_if_none:'/static/img/placeholder.png' }}" alt="{{ movie.title }}">
+        </div>
+      {% endfor %}
+    </div>
+    <!-- Navigation + Pagination -->
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-pagination"></div>
+  </div>
+  {% endif %}
+
+  <!-- ✅ Main Page Content -->
+  {% block body %}{% endblock %}
+
+  <!-- ✅ Footer -->
+  <footer class="footer bg-dark text-light py-4 mt-5">
+    <div class="container text-center">
+      <p class="mb-1">© Aminul Islam 2025</p>
+      <ul class="list-inline">
+        <li class="list-inline-item"><a href="{% url 'home' %}" class="text-light">Home</a></li>
+        <li class="list-inline-item"><a href="{% url 'movie:about' %}" class="text-light">About</a></li>
+        <li class="list-inline-item"><a href="#" class="text-light">Terms & Conditions</a></li>
+      </ul>
+      <p class="small text-muted mt-2">Watch Free Movie Trailers | Subtitled Films | New Releases</p>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ✅ Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- ✅ Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new Swiper(".homeslider", {
+      loop: true,
+      speed: 800,
+      autoplay: {
+        delay: 4000,
+        disableOnInteraction: false,
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+    });
+  });
+</script>
+
+<!-- ✅ Optional jQuery & Custom Script -->
+<script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

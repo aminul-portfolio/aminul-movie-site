@@ -1,0 +1,325 @@
+
+/* ✅ Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #121212;
+  color: #f0f0f0;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+
+/* ✅ Header and Navigation */
+.header {
+  background-color: #1a1a1a;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.logo img {
+  height: 50px;
+}
+.menu ul {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.menu ul li a {
+  padding: 8px 14px;
+  font-weight: 500;
+  color: #fff;
+  display: block;
+  transition: background 0.3s;
+}
+.menu ul li a:hover,
+.menu ul li a.active {
+  background-color: #333;
+  border-radius: 5px;
+}
+.toggle {
+  display: none;
+  cursor: pointer;
+}
+.toggle img {
+  height: 30px;
+}
+@media (max-width: 768px) {
+  .menu ul {
+    flex-direction: column;
+    display: none;
+    background: #111;
+    width: 100%;
+  }
+  .menu ul.show {
+    display: flex;
+  }
+}
+
+/* ✅ Movie Slider & Cards */
+.movie-horizontal-scroll {
+  overflow-x: auto;
+  padding: 20px 0;
+  background-color: #121212;
+  border-radius: 8px;
+  scroll-behavior: smooth;
+  position: relative;
+}
+.scroll-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1rem;
+  padding-left: 1rem;
+}
+.movie-card {
+  flex: 0 0 auto;
+  width: 200px;
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 6px;
+  transition: transform 0.3s;
+}
+.movie-card:hover {
+  transform: scale(1.05);
+}
+.movie-poster {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+/* ✅ Unified Scroll Button Styles */
+.scroll-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: none;
+  padding: 8px;
+  width: 40px;
+  height: 60px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.scroll-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+.left-btn { left: 0.5rem; }
+.right-btn { right: 0.5rem; }
+
+/* ✅ Section Styles */
+.panel {
+  padding: 20px;
+  background-color: #181818;
+  border-radius: 10px;
+}
+.panel h2 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #fff;
+}
+.panel .d-flex {
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  flex-wrap: nowrap;
+  gap: 1rem;
+}
+.panel .d-flex > div {
+  flex: 0 0 auto;
+  min-width: 180px;
+}
+
+/* ✅ Swiper Hero Header */
+.homeslider {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+.homeslider .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+.swiper-button-next, .swiper-button-prev {
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.swiper-button-next:hover, .swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ✅ Footer */
+.footer {
+  background-color: #1a1a1a;
+  color: #aaa;
+  padding: 20px;
+  text-align: center;
+}
+.footer a:hover {
+  text-decoration: underline;
+  color: #0d6efd;
+}
+
+/* ✅ Utility */
+.badge {
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  margin: 2px;
+  border-radius: 5px;
+}
+.hometitle {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* ✅ Trailer Responsive Wrapper */
+.video-wrapper iframe {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+}
+.swiper-button-next,
+.swiper-button-prev {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 10px;
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+.movie-card small,
+.movie-card h6 {
+  color: #f5f5f5 !important;
+}
+.movie-card h6,
+.movie-card p {
+  color: #f8f9fa !important;
+}
+
+.movie-card .badge {
+  font-size: 0.75rem;
+  padding: 3px 6px;
+  margin: 2px;
+  border-radius: 4px;
+}
+.movie-horizontal-scroll {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.movie-card img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 40%;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+
+.left-btn {
+  left: -20px;
+}
+
+.right-btn {
+  right: -20px;
+}
+
+@media (max-width: 768px) {
+  .movie-card img {
+    height: 250px;
+  }
+}
+.movie-horizontal-scroll {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 1rem;
+  position: relative;
+}
+
+.scroll-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.movie-card img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.scroll-btn {
+  position: absolute;
+  top: 40%;
+  z-index: 10;
+  width: 40px;
+  height: 40px;
+  border: none;
+}
+
+.left-btn {
+  left: -20px;
+}
+
+.right-btn {
+  right: -20px;
+}
+
+@media (max-width: 768px) {
+  .movie-card img {
+    height: 250px;
+  }
+}
